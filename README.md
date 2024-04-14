@@ -1,3 +1,8 @@
+# Introduction
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
+[Course](https://cs50.harvard.edu/sql/2024/) : CS50’s Introduction to Databases with SQL
+
 - Problemset 0
   - [Cyberchase](https://cs50.harvard.edu/sql/2024/psets/0/cyberchase/)
   - [Normals](https://cs50.harvard.edu/sql/2024/psets/0/normals/)
