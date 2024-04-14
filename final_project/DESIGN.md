@@ -69,142 +69,142 @@ ALL justifications for DATETIMES are:
 
 #### user
 
-The user entity:
-    -PK user_id INT NOT NULL AUTO_INCREMENT:
-    -username VARCHAR NOT NULL UNIQUE:
+* The user entity:
+    * PK user_id INT NOT NULL AUTO_INCREMENT:
+    * username VARCHAR NOT NULL UNIQUE:
         NOT NULL because a user cannot not have a username.
         UNIQUE because 2 users cannot have the same username.
-    -password VARCHAR NOT NULL:
+    * password VARCHAR NOT NULL:
          NOT NULL because a user cannot not have a username.
-    -user_type ENUM('student', 'individual', 'family'):
+    * user_type ENUM('student', 'individual', 'family'):
         The user can be 1 of 3 types. Depending on what he is, his charge is calculated accordingly
-    -email VARCHAR NOT NULL UNIQUE:
+    * email VARCHAR NOT NULL UNIQUE:
         NOT NULL because a user cannot not have an email.
         UNIQUE because a user cannot have multiple user_accounts with the same email.
-    -charge DECIMAL(5, 2)  DEFAULT 7.99:
+    * charge DECIMAL(5, 2)  DEFAULT 7.99:
         DECIMAL so as the charge of every user is calculated in euros/dollars (7.99 is 7 euros and 99  cents)
         DEFAULT 7.99 the charge corresponding to the 'individual' user_type which is supposedly the most common
-    -user_date_of_creation DATETIME DEFAULT CURRENT_TIMESTAMP:
-    -profile_picture BLOB:
+    * user_date_of_creation DATETIME DEFAULT CURRENT_TIMESTAMP:
+    * profile_picture BLOB:
         The profile picture that every user is going to have on his profile
         BLOB usage is self-explanatory
-    -deleted TINYINT DEFAULT 0:
+    * deleted TINYINT DEFAULT 0:
         TINYINT because deleted is meant to be a boolean variable (0 or 1).
         DEFAULT 0 means the playlist exists, when deleted = 1 the user is soft deleted.
 
 
 #### playlist
 
-The playlist entity:
-    -playlist_id INT NOT NULL AUTO_INCREMENT:
-    -playlist_title VARCHAR NOT NULL:
+* The playlist entity:
+    * playlist_id INT NOT NULL AUTO_INCREMENT:
+    * playlist_title VARCHAR NOT NULL:
         Title of the playlist, must exist (could probably allow a playlist without a title)
-    -playlist_description TEXT:
+    * playlist_description TEXT:
         Text chosen so as the description can be as big as someone likes.
-    -playlist_icon BLOB:
+    * playlist_icon BLOB:
         The picture/icon of the playlist.
         BLOD usage is self-explanatory.
-    -FK user_id INTEGER NOT NULL
+    * FK user_id INTEGER NOT NULL
         The PK of the user table, connects every playlist to the user that created them.
         A user can create multiple playlists but a playlist can be created by only one user.
-    -playlist_date_of_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
-    -deleted TINYINT DEFAULT 0:
+    * playlist_date_of_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
+    * deleted TINYINT DEFAULT 0:
         TINYINT because deleted is meant to be a boolean variable (0 or 1).
         DEFAULT 0 means the playlist exists, when deleted = 1 the user is soft deleted.
         IF a user is soft deleted, all his playlists are soft deleted too through a procedure (SEE SCHEMA.SQL)
 
 #### artist
 
-The artist entity:
-    -PK artist_id INT NOT NULL AUTO_INCREMENT:
-    -artist_name VARCHAR(50) NOT NULL:
+* The artist entity:
+    * PK artist_id INT NOT NULL AUTO_INCREMENT:
+    * artist_name VARCHAR(50) NOT NULL:
         Every artist needs to have a name/band name.
         The name is not UNIQUE as 2 different artists might have unknowingly the same name.
-    -country VARCHAR:
+    * country VARCHAR:
         Optionaly the country where the artist hails from.
 
 #### song
 
-The song entity:
-    -PK song_id INT NOT NULL AUTO_INCREMENT:
-    -song_title VARCHAR NOT NULL:
+* The song entity:
+    * PK song_id INT NOT NULL AUTO_INCREMENT:
+    * song_title VARCHAR NOT NULL:
         Every song must have a titple
-    -song_duration DECIMAL (5, 2) NOT NULL:
+    * song_duration DECIMAL (5, 2) NOT NULL:
         The duration of a song in seconds. Not calculated beyond 2 decimals due to the non need of being perscise.
-    -song_date_of_creation DATE NOT NULL:
+    * song_date_of_creation DATE NOT NULL:
         The date an album is created may be different than the date a song that was featured within it was created. Thus both dates are
         inserted manually and there is no procedure or trigger to make them equal.
-    -FK artist_id INTEGER NOT NULL:
+    * FK artist_id INTEGER NOT NULL:
         Every song is composed by an artist and liked to them through this FOREIGN KEY.
 
 #### playlist_songs
 
-The playlist_songs bridge entity:
-    -PK,FK playlist_id INT NOT NULL:
-    -PK,FK song_id INT NOT NULL:
+* The playlist_songs bridge entity:
+    * PK,FK playlist_id INT NOT NULL:
+    * PK,FK song_id INT NOT NULL:
         A playlist may include multiple songs and a song can be featured in many playlist  through the use of these FOREIGN KEYS.
-    -song_date_added DATETIME DEFAULT CURRENT_TIMESTAMP:
+    * song_date_added DATETIME DEFAULT CURRENT_TIMESTAMP:
 
 #### likes
 
-The likes bridge entity
-    PK,FK user_id INT NOT NULL:
-    PK,FK song_id INT NOT NULL:
+* The likes bridge entity
+    * PK,FK user_id INT NOT NULL:
+    * PK,FK song_id INT NOT NULL:
         A composite PRIMARY KEY signaling that every user may like one to many songs and
         a song can be liked by one to many users.
-    date_of_like DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
+    * date_of_like DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
 
 #### play_history
 
-The play_history entity
-    This represents the collective times a user has listened to a particular song.
-    -PK,FK user_id INT NOT NULL:
-    -PK,FK song_id INT NOT NULL:
+* The play_history entity
+    * This represents the collective times a user has listened to a particular song.
+    * PK,FK user_id INT NOT NULL:
+    * PK,FK song_id INT NOT NULL:
         A composite PRIMARY KEY signaling that one or many users can listen to one or many songs.
-    -played_last DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
+    * played_last DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
         This gets updated through a procedure (SEE schema.sql) everytime a song is replayed and it always
         shows the latest datetime this has happened.
-    -times_played SMALLINT NOT NULL DEFAULT 1:
+    * times_played SMALLINT NOT NULL DEFAULT 1:
         SMALLINT due to the time-wise limited times a user can replay a song.
         DEFAULT 1 because if a user and a song pair is in this table, then he has listened to a song at least once.
 
 #### album
 
-The album entity:
-    -PK album_id INTEGER NOT NULL AUTO_INCREMENT:
-    -album_title VARCHAR NOT NULL:
+* The album entity:
+    * PK album_id INTEGER NOT NULL AUTO_INCREMENT:
+    * album_title VARCHAR NOT NULL:
         An album must have a title.
-    -album_duration DECIMAL(5, 2) NOT NULL:
+    * album_duration DECIMAL(5, 2) NOT NULL:
         The duration of an album in seconds.
         NOTE: Unlike playlists the duration of an album is given as an input during the INSERT.
-    -album_date_of_creation DATE NOT NULL:
+    * album_date_of_creation DATE NOT NULL:
         The date an album is created may be different than the date a song that was featured within it was created.
-    -album_cover BLOB:
+    * album_cover BLOB:
         Cover art of an album
         BLOB use is self-explanatory
-    -FK artist_id INT:
+    * FK artist_id INT:
         An artist composes an album and is connected to it through this FOREIGN KEY.
 
 #### album_songs
 
-The album_songs bridge entity:
-    PK,FK album_id INT NOT NULL:
-    PK,FK song_id INT NOT NULL:
+* The album_songs bridge entity:
+    * PK,FK album_id INT NOT NULL:
+    * PK,FK song_id INT NOT NULL:
         An album may include multiple songs and a song can be featured in many albums through the use of these FOREIGN KEYS.
-    track_number SMALLINT:
+    * track_number SMALLINT:
         SMALLINT is used  due to an album having a very limited number of tracks.
 
 #### user_changes
-The entity user_changes:
-    -PK user_change_id INT NOT NULL AUTO_INCREMENT:
-    -user_change_type VARCHAR(20) NOT NULL:
+* The entity user_changes:
+    * PK user_change_id INT NOT NULL AUTO_INCREMENT:
+    * user_change_type VARCHAR(20) NOT NULL:
         When a change is implemented on the user table, its type is stored here.
         For example when there is a new user inserted in the user table, the user_change_type = New user.
-    -change_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
-    -FK user_id INT NOT NULL:
+    * change_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
+    * FK user_id INT NOT NULL:
         All inserts,delets,updates that happen on a certain user are recorded
-    -old_value VARCHAR(50) DEFAULT '-':
-    -new_value VARCHAR(50) DEFAULT '-':
+    * old_value VARCHAR(50) DEFAULT '-':
+    * new_value VARCHAR(50) DEFAULT '-':
         If the user table gets update both the old and the new values are stored in the recording table.
         DEFAULT is '-' so for example when there is a new user inserted the old value of his username(that did not exist before the insertion) is -.
 
@@ -299,6 +299,13 @@ Due to this DB always requiring a lot of updates,inserts (frequent releases of n
     One caviat is that all users can add and remove songs from any playlist.
     Playlists from soft deleted users are not visible.
 
+
+### TRIGGERS
+
+* user_inserted AFTER INSERT ON user:
+    Inserts into the user_changes table after a fresh insert
+* user_updated:
+    Inserts into the user_changes table after an update
 
 ## Limitations
 
