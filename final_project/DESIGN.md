@@ -323,4 +323,4 @@ Due to this DB always requiring a lot of updates,inserts (frequent releases of n
 * The users don't have any link to the real world (no country, address, city, phone needed for this DB), except their email.
 * The artists are treated as a single entity (whether the artist is a band with several members or a single singer).
 * Only the user inserts,updates,deletes are recorded.
-* A few relationships are not represented perfectly (SEE ###Relationships)
+* A few relationships are not represented perfectly (SEE RELATIONSHIPS)
