@@ -32,3 +32,6 @@
   - [Happy to Connect](https://cs50.harvard.edu/sql/2024/psets/6/connect/)
   - [From the Deep](https://cs50.harvard.edu/sql/2024/psets/6/deep/)
   - [Dont Panic!](https://cs50.harvard.edu/sql/2024/psets/6/dont-panic/java/)
+
+    
+**[FINAL PROJECT](https://cs50.harvard.edu/sql/2024/project/): "Spotify"-like Database**
