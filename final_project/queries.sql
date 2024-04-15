@@ -70,7 +70,7 @@ VALUES ((SELECT user_id FROM user WHERE username = 'kostas123'), (SELECT song_id
 
 INSERT INTO play_history(user_id, song_id)
 VALUES (1,2),
-	   (1,3),
+	(1,3),
        (2,3),
        (2,1),
        (1,5),
@@ -83,7 +83,7 @@ NOTE: No LIMIT has been implemented within the VIEWS. Thats intentional so as to
 /*This is a stored procedure that checks if the student (through matching both username and email) existed
 in the system in the past.
 If he did then he is restored, if he didn't then he is inserted as usual.*/
-CALL SoftInsert('cs50student', 'cs50', 'student', 'student@mail');
+CALL SoftInsert('cs50student', 'cs50', 'student', 'student@');
 
 /*Using SoftDelete('cs50student') we can soft delete a user depending on his username (which is unique for every user)*/
 

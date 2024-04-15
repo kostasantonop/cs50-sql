@@ -2,9 +2,12 @@
 
 By Kostantinos Antonopoulos
 
-Video overview: <URL HERE>
+Video overview: <https://youtu.be/StMSmv9Ta_k>
 
 ## Scope
+
+Project title: 'Spotify' - like Database  
+
 
 The purpose of this database, aptly named "spotify", is to create the backbone of a database based on and with similar function
 to the popular app 'Spotify'. This "spotify" database is very bare bones and it can only perform very basic and simplistic functions.
@@ -32,7 +35,7 @@ Out of scope for this DB are:
 
 ## Functional Requirements
 
-* A user should be able to create and delete a user accout.\
+* A user should be able to create and delete a user accout.
     NOTE: The deletion of an account does not truly delete the user,
     it just makes everything invisible (except the likes the user has made which are completely deleted)
 * A user should be able to like and unlike songs.
@@ -58,12 +61,12 @@ MySQL has been used for this DB (SEE schema.sql)
 VARCHAR is used so there is input flexibility.
 
 All justifications for PRIMARY KEYS that are ids, are:
-     INT is chosen to support a practically unlimited amount of x.\
-     NOT NULL is unnecessary as id is the primary key, it exists purely out of better representation of the logic behind the table.\
+     INT is chosen to support a practically unlimited amount of x.
+     NOT NULL is unnecessary as id is the primary key, it exists purely out of better representation of the logic behind the table.
      AUTO_INCREMENT so every new INSERT has a different sequentialy bigger id.
 
 ALL justifications for DATETIMES are:
-    DATETIME is used so there is an exact snapshot of when a playlist was created.\
+    DATETIME is used so there is an exact snapshot of when a playlist was created.
     DEFAULT CURRENT_TIMESTAMP records the time when the x was created.
 
 
@@ -72,24 +75,24 @@ ALL justifications for DATETIMES are:
 * The user entity:
     * PK user_id INT NOT NULL AUTO_INCREMENT:
     * username VARCHAR NOT NULL UNIQUE:
-        NOT NULL because a user cannot not have a username.\
+        NOT NULL because a user cannot not have a username.
         UNIQUE because 2 users cannot have the same username.
     * password VARCHAR NOT NULL:
          NOT NULL because a user cannot not have a username.
     * user_type ENUM('student', 'individual', 'family'):
         The user can be 1 of 3 types. Depending on what he is, his charge is calculated accordingly.
     * email VARCHAR NOT NULL UNIQUE:
-        NOT NULL because a user cannot not have an email.\
+        NOT NULL because a user cannot not have an email.
         UNIQUE because a user cannot have multiple user_accounts with the same email.
     * charge DECIMAL(5, 2)  DEFAULT 7.99:
-        DECIMAL so as the charge of every user is calculated in euros/dollars (7.99 is 7 euros and 99  cents).\
+        DECIMAL so as the charge of every user is calculated in euros/dollars (7.99 is 7 euros and 99  cents).
         DEFAULT 7.99 the charge corresponding to the 'individual' user_type which is supposedly the most common.
     * user_date_of_creation DATETIME DEFAULT CURRENT_TIMESTAMP:
     * profile_picture BLOB:
-        The profile picture that every user is going to have on his profile.\
+        The profile picture that every user is going to have on his profile.
         BLOB usage is self-explanatory
     * deleted TINYINT DEFAULT 0:
-        TINYINT because deleted is meant to be a boolean variable (0 or 1).\
+        TINYINT because deleted is meant to be a boolean variable (0 or 1).
         DEFAULT 0 means the playlist exists, when deleted = 1 the user is soft deleted.
 
 
@@ -102,15 +105,15 @@ ALL justifications for DATETIMES are:
     * playlist_description TEXT:
         Text chosen so as the description can be as big as someone likes.
     * playlist_icon BLOB:
-        The picture/icon of the playlist.\
+        The picture/icon of the playlist.
         BLOD usage is self-explanatory.
     * FK user_id INTEGER NOT NULL:
-        The PK of the user table, connects every playlist to the user that created them.\
+        The PK of the user table, connects every playlist to the user that created them.
         A user can create multiple playlists but a playlist can be created by only one user.
     * playlist_date_of_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP:
     * deleted TINYINT DEFAULT 0:
-        TINYINT because deleted is meant to be a boolean variable (0 or 1).\
-        DEFAULT 0 means the playlist exists, when deleted = 1 the user is soft deleted.\
+        TINYINT because deleted is meant to be a boolean variable (0 or 1).
+        DEFAULT 0 means the playlist exists, when deleted = 1 the user is soft deleted.
         IF a user is soft deleted, all his playlists are soft deleted too through a procedure (SEE SCHEMA.SQL)
 
 #### artist
@@ -164,7 +167,7 @@ ALL justifications for DATETIMES are:
         This gets updated through a procedure (SEE schema.sql) everytime a song is replayed and it always
         shows the latest datetime this has happened.
     * times_played SMALLINT NOT NULL DEFAULT 1:
-        SMALLINT due to the time-wise limited times a user can replay a song.\
+        SMALLINT due to the time-wise limited times a user can replay a song.
         DEFAULT 1 because if a user and a song pair is in this table, then he has listened to a song at least once.
 
 #### album
@@ -204,7 +207,7 @@ ALL justifications for DATETIMES are:
         All inserts,delets,updates that happen on a certain user are recorded
     * old_value VARCHAR(50) DEFAULT '-':
     * new_value VARCHAR(50) DEFAULT '-':
-        If the user table gets update both the old and the new values are stored in the recording table.\
+        If the user table gets update both the old and the new values are stored in the recording table.
         DEFAULT is '-' so for example when there is a new user inserted the old value of his username(that did not exist before the insertion) is -.
 
 
@@ -247,10 +250,10 @@ Due to this DB always requiring a lot of updates,inserts (frequent releases of n
 ### VIEWS
 
 * most_liked_songs:
-    Songs ordered depending on the amount of likes each song has from multiple users.\
+    Songs ordered depending on the amount of likes each song has from multiple users.
     If a user is soft-deleted, his likes are going to be deleted too.
 * most_liked_playlists:
-	Playlists ordered depending on the cumulative likes of all songs contained in them.\
+	Playlists ordered depending on the cumulative likes of all songs contained in them.
     NOTE-LIMITATION: Users cannot directly like playlists or albums.
 * most_liked_albums:
 	Albums ordered depending on the cumulative likes of all songs contained in them.
