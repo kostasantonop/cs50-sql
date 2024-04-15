@@ -2,7 +2,7 @@
 ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
-[Certificate](Certificate-cs50-SQL-1.png)
+![Certificate](Certificate-cs50-SQL-1.png)
 
 [Course](https://cs50.harvard.edu/sql/2024/) : CS50’s Introduction to Databases with SQL
 
